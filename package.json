@@ -1,7 +1,9 @@
 {
   "name": "adax-vue",
-  "version": "0.1.1",
-  "main": "index.js",
+  "version": "0.1.2",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "description": "adax adapter for vue",
   "repository": {
     "type": "git",
@@ -18,6 +20,8 @@
   "keywords": [],
   "type": "commonjs",
   "scripts": {
+    "clean": "rimraf node_modules && rimraf dist && rimraf coverage",
+    "build": "tsc",
     "test": "vitest",
     "test:watch": "vitest --watch"
   },
