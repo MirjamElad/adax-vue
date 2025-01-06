@@ -1,0 +1,41 @@
+{
+  "name": "adax-vue",
+  "version": "0.1.0",
+  "main": "index.js",
+  "description": "adax adapter for vue",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MirjamElad/adax-vue.git"
+  },
+  "files": [
+    "dist/**",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "Mirjam Elad",
+  "license": "private for now",
+  "sideEffects": false,
+  "keywords": [],
+  "type": "commonjs",
+  "scripts": {
+    "test": "vitest",
+    "test:watch": "vitest --watch"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.5",
+    "@vue/test-utils": "^2.4.6",
+    "eslint": "^8.57.1",
+    "eslint-config-custom": "^0.0.0",
+    "jsdom": "^25.0.1",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "adax-core": "^0.2.0",
+    "vue": "^3.0.0",
+    "vue-template-compiler": "^2.7.16"
+  }
+}
