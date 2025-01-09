@@ -1,6 +1,6 @@
 {
   "name": "adax-vue",
-  "version": "0.1.5",
+  "version": "0.1.9",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -9,19 +9,26 @@
     "type": "git",
     "url": "https://github.com/MirjamElad/adax-vue.git"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "files": [
-    "dist",
+    "dist/**",
     "README.md",
     "LICENSE"
   ],
   "author": "Mirjam Elad",
   "license": "private for now",
   "sideEffects": false,
-  "keywords": [],
-  "type": "commonjs",
+  "keywords": [
+    "VUE state management"
+  ],
   "scripts": {
     "clean": "rimraf node_modules && rimraf dist && rimraf coverage",
-    "build": "tsc",
+    "build": "tsup src/index.ts --format esm,cjs --dts --out-dir dist",
     "test": "vitest",
     "test:watch": "vitest --watch"
   },
@@ -32,6 +39,7 @@
     "eslint": "^8.57.1",
     "eslint-config-custom": "^0.0.0",
     "jsdom": "^25.0.1",
+    "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "vite": "^5.4.11",
     "vitest": "^2.1.8"
