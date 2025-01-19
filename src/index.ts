@@ -8,9 +8,13 @@ import {
 import { subscribe, type Result, type QueryOptions } from 'adax-core';
 export { trigger, addRule } from 'adax-core';
 
-export const useSync = <FnType extends (x: any) => any>(
+export const useSync: <FnType extends (x: any) => any>(
+  readFn: FnType, 
+  getParamsObj: () => Parameters<FnType>[0] | undefined,
+  options: QueryOptions
+) => ReturnType<FnType> = <FnType extends (x: any) => any>(
   readFn: FnType,
-  getParamsObj?: () => Parameters<FnType>[0] | undefined,
+  getParamsObj: () => Parameters<FnType>[0] | undefined,
   options: QueryOptions = {}
 ) => {
   console.info('adax-vue:useSync...');
@@ -76,5 +80,5 @@ export const useSync = <FnType extends (x: any) => any>(
     sub.off();
   });
   console.info('adax-vue:result...');
-  return result;
+  return result as ReturnType<FnType>;
 };
