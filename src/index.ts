@@ -43,7 +43,7 @@ export const useSync = <FnType extends (x: any) => any>(
     (newProps) => {
       for (const key in newProps) {
         if (newProps[key] !== propsToWatch[key]) {
-          sub.onBeforeUnmount();
+          sub.off();
           sub = subscribe(
             readTrigger,
             readFn,
@@ -60,20 +60,20 @@ export const useSync = <FnType extends (x: any) => any>(
         }
       }
       propsToWatch = { ...newProps };
-      sub.onMounted();
+      sub.on();
     }
   );
 
   onMounted(() => {
     console.info('adax-vue:onMounted...');
     isMounted.value = true;
-    sub.onMounted();
+    sub.on();
   });
 
   onBeforeUnmount(() => {
     console.info('adax-vue:onBeforeUnmount...');
     isMounted.value = false;
-    sub.onBeforeUnmount();
+    sub.off();
   });
   console.info('adax-vue:result...');
   return result;
