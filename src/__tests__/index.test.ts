@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, fireEvent } from '@testing-library/vue';
 import MyApp from './MyApp.vue';
-import { useSync } from '../index';
 
 const sampleStore = { alpha: 0, beta: 0 };
 const readFn = vi.fn(({ name }: { name: 'alpha' | 'beta' }) => {
@@ -78,19 +77,18 @@ describe('adax-vue interacts with adax as expected', () => {
     expect(mockedFunctions.my_on).toHaveBeenCalledTimes(2);    
   });
   
-  // it('Component with useSync causes invocation of a diff readFn when useSync`s query is updated', async () => {
-  //   const { getByTestId } = render(MyApp, { props: { readFn, readFn_2 } });
-  //   expect(readFn).toHaveBeenCalledWith({name:'alpha'});
-  //   expect(readFn).toHaveBeenCalledTimes(1);
-  //   expect(readFn_2).toHaveBeenCalledTimes(0);
-  //   const switchQueryToggle = getByTestId('switch-query-toggle');
-  //   console.log('<<<<%%%%%%>>>>  switch-query-toggle  <<<<%%%%%%>>>>');
-  //   await fireEvent.click(switchQueryToggle);
-  //   // expect(readFn).toHaveBeenCalledWith({name:'alpha'});
-  //   // expect(readFn).toHaveBeenCalledTimes(2);
-  //   expect(readFn_2).toHaveBeenCalledWith({name:'alpha'});
-  //   expect(readFn_2).toHaveBeenCalledTimes(1);
-  // });
+  it('Component with useSync causes invocation of a diff readFn when useSync`s query is updated', async () => {
+    const { getByTestId } = render(MyApp, { props: { readFn, readFn_2 } });
+    expect(readFn).toHaveBeenCalledWith({name:'alpha'});
+    expect(readFn).toHaveBeenCalledTimes(1);
+    expect(readFn_2).toHaveBeenCalledTimes(0);
+    const switchQueryToggle = getByTestId('switch-query-toggle');
+    await fireEvent.click(switchQueryToggle);
+    // readFn not called again!
+    expect(readFn).toHaveBeenCalledTimes(1);
+    expect(readFn_2).toHaveBeenCalledWith({name:'alpha'});
+    expect(readFn_2).toHaveBeenCalledTimes(1);
+  });
   
   it('Component with useSync causes the invocation of readFn when mounted if skipInitalQuerying is not set to true', async () => {
     render(MyApp, { props: { readFn, readFn_2 } });

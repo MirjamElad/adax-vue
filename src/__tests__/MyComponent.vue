@@ -15,7 +15,7 @@
     onClick: Function
   });
   
-  const value = useSync(props.query, () => ({ name: props.name }), { skipInitalQuerying: props.skipInitalQuerying });
+  const value = useSync(() => [props.query, ({ name: props.name })], { skipInitalQuerying: props.skipInitalQuerying });
   
   const handleClick = () => {
     props.onClick?.();

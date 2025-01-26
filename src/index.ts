@@ -9,16 +9,16 @@ import { subscribe, type Result, type QueryOptions } from 'adax-core';
 export { trigger, addRule } from 'adax-core';
 
 export const useSync = <FnType extends (x: any) => any>(
-  readFn: FnType,
-  getParamsObj?: () => Parameters<FnType>[0] | undefined,
+  getQueryAndParams: () => [FnType, Parameters<FnType>[0] | undefined],
   options: QueryOptions = {}
 ): Readonly<ReturnType<FnType>> => {
   console.info('adax-vue:useSync...');
+  const [ query, paramsObj ] = getQueryAndParams();
   const isMounted = ref(false);
   const result = ref<Readonly<ReturnType<FnType>>>(
     options?.skipInitalQuerying
       ? undefined
-      : readFn(getParamsObj ? getParamsObj() : undefined)
+      : query(paramsObj || undefined)
   );
   
   const readTrigger = (res: Result) => {
@@ -27,8 +27,8 @@ export const useSync = <FnType extends (x: any) => any>(
   };
   let sub = subscribe(
     readTrigger,
-    readFn,
-    getParamsObj ? getParamsObj() : undefined,
+    query,
+    paramsObj || undefined,
     {
       ...options,
       skipInitalQuerying: true,
@@ -44,10 +44,11 @@ export const useSync = <FnType extends (x: any) => any>(
       for (const key in newProps) {
         if (newProps[key] !== propsToWatch[key]) {
           sub.off();
+          const [ query, paramsObj ] = getQueryAndParams();
           sub = subscribe(
             readTrigger,
-            readFn,
-            getParamsObj ? getParamsObj() : undefined,
+            query,
+            paramsObj || undefined,
             {
               ...options,
               skipInitalQuerying: true,
@@ -55,7 +56,7 @@ export const useSync = <FnType extends (x: any) => any>(
           );
           result.value = options?.skipInitalQuerying
             ? undefined
-            : readFn(getParamsObj ? getParamsObj() : undefined);
+            : query(paramsObj || undefined);
           break;
         }
       }
