@@ -12,14 +12,16 @@ export const useSync = <FnType extends (x: any) => any>(
   getQueryAndParams: () => [FnType, Parameters<FnType>[0] | undefined],
   options: QueryOptions = {}
 ): Readonly<ReturnType<FnType>> => {
-  console.info('adax-vue:useSync...');
   const [ query, paramsObj ] = getQueryAndParams();
+  console.info('adax-vue: [ query, paramsObj ]:', [ query, paramsObj ] );
   const isMounted = ref(false);
   const result = ref<Readonly<ReturnType<FnType>>>(
     options?.skipInitalQuerying
       ? undefined
       : query(paramsObj || undefined)
   );
+  console.info('adax-vue: result:', result );
+  console.info('adax-vue: result.value:', result.value );
   
   const readTrigger = (res: Result) => {
     console.info('adax-vue:readTrigger...');
@@ -57,6 +59,8 @@ export const useSync = <FnType extends (x: any) => any>(
           result.value = options?.skipInitalQuerying
             ? undefined
             : query(paramsObj || undefined);
+          console.info('WATCH::adax-vue: result:', result );
+          console.info('WATCH::adax-vue: result.value:', result.value );
           break;
         }
       }
