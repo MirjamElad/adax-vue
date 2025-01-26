@@ -3,14 +3,8 @@ import { render, fireEvent } from '@testing-library/vue';
 import MyApp from './MyApp.vue';
 
 const sampleStore = { alpha: 0, beta: 0 };
-const readFn = vi.fn(({ name }: { name: 'alpha' | 'beta' }) => {
-  console.log(`readFn::sampleStore[${name}]:`, sampleStore[name]);
-  return (sampleStore[name])
-});
-const readFn_2 = vi.fn(({ name }: { name: 'alpha' | 'beta' }) => {
-  console.log(`readFn_2::sampleStore[${name}]:`, sampleStore[name]);
-  return (sampleStore[name])
-});
+const readFn = vi.fn(({ name }: { name: 'alpha' | 'beta' }) => (sampleStore[name]));
+const readFn_2 = vi.fn(({ name }: { name: 'alpha' | 'beta' }) => (sampleStore[name]));
 
 const mockedFunctions = {
   my_on: vi.fn(() => 'on'),

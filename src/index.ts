@@ -13,20 +13,14 @@ export const useSync = <FnType extends (x: any) => any>(
   options: QueryOptions = {}
 ): Readonly<ReturnType<FnType>> => {
   const [ query, paramsObj ] = getQueryAndParams();
-  console.info('adax-vue: [ query, paramsObj ]:', [ query, paramsObj ] );
   const isMounted = ref(false);
   const result = ref<Readonly<ReturnType<FnType>>>(
     options?.skipInitalQuerying
       ? undefined
       : query(paramsObj || undefined)
   );
-  console.info('adax-vue: result:', result );
-  console.info('adax-vue: result.value:', result.value );
   
-  const readTrigger = (res: Result) => {
-    console.info('adax-vue:readTrigger...');
-    return (result.value = res.data)
-  };
+  const readTrigger = (res: Result) => result.value = res.data;
   let sub = subscribe(
     readTrigger,
     query,
@@ -59,8 +53,6 @@ export const useSync = <FnType extends (x: any) => any>(
           result.value = options?.skipInitalQuerying
             ? undefined
             : query(paramsObj || undefined);
-          console.info('WATCH::adax-vue: result:', result );
-          console.info('WATCH::adax-vue: result.value:', result.value );
           break;
         }
       }
@@ -70,16 +62,13 @@ export const useSync = <FnType extends (x: any) => any>(
   );
 
   onMounted(() => {
-    console.info('adax-vue:onMounted...');
     isMounted.value = true;
     sub.on();
   });
 
   onBeforeUnmount(() => {
-    console.info('adax-vue:onBeforeUnmount...');
     isMounted.value = false;
     sub.off();
   });
-  console.info('adax-vue:result...');
   return result as Readonly<ReturnType<FnType>>;
 };
