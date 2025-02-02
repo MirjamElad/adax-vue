@@ -3,7 +3,7 @@
   </template>
   
   <script setup>
-  import { useSync } from '../index';
+  import { useSync } from '../../index';
   
   const props = defineProps({
     query: Function,

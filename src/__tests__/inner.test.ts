@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, fireEvent } from '@testing-library/vue';
-import MyApp from './MyApp.vue';
+import MyApp from './InnerTestApp/MyApp.vue';
 
 const sampleStore = { alpha: 0, beta: 0 };
 const readFn = vi.fn(({ name }: { name: 'alpha' | 'beta' }) => (sampleStore[name]));
