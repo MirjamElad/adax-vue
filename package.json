@@ -1,6 +1,6 @@
 {
   "name": "adax-vue",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -49,10 +49,10 @@
     "typescript": "^5.7.2",
     "vite": "^5.4.11",
     "vitest": "^2.1.8",
-    "vue-template-compiler": "^2.7.16"
+    "vue-template-compiler": "^0.1.0"
   },
   "peerDependencies": {
-    "adax-core": "^0.2.3",
+    "adax-core": "^0.2.10",
     "vue": "^3.0.0"
   }
 }
